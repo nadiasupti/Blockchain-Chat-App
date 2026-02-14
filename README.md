@@ -26,6 +26,9 @@ Embark on a journey into the decentralized world of communication with **ChatBud
 * **Development Environment**: Hardhat & Ganache
 * **Blockchain Interaction**: Ethers.js
 * **Wallet**: MetaMask
+![Next.js](https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![Solidity](https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=solidity&logoColor=white)
+![MetaMask](https://img.shields.io/badge/MetaMask-E2761B?style=for-the-badge&logo=metamask&logoColor=white)
 
 ---
 
