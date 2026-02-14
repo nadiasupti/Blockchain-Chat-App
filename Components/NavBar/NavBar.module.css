@@ -1,0 +1,297 @@
+/* 
+.NavBar{
+    width: 80%;
+    margin: 3rem auto;
+    position: relative;
+
+}
+
+.NavBar_box{
+    display: grid;
+    grid-template-columns: 1fr 1.7fr;
+    align-items: center;
+    gap: 2rem;
+
+}
+.NavBar_box_right{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.NavBar_box_right_menu{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    border-bottom:2px solid transparent;
+    transition: all .3s ease-in-out;
+
+}
+
+.active_btn{
+    color: #f18303;
+    border-bottom: 2px solid #f18303;
+    padding-bottom: .4rem;
+
+}
+.NavBar_box_right_connect button{
+    background-color: rgba(0,0,0,0.25);
+    padding: 1rem;
+    border: none;
+    border-radius: .5rem;
+    font-size: 1.1rem;
+    color: #f18303;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.NavBar_box_right_close{
+    display: none;
+}
+.NavBar_box_right_open{
+    display: none;
+}
+
+.mobile_menu{
+    display:none;
+}
+.modelBox{
+    position: fixed;
+    inset: 0 0 0 0;
+    background-color: #292f3f;
+    z-index: 77777777;
+}
+@media only screen and (max-width: 35em){
+    .NavBar{
+        width: 90%;
+        margin: 2rem auto;
+        }
+        .NavBar_box{
+            grid-template-columns: .6fr 2fr;
+            justify-content: space-between;
+        }
+        .NavBar_box_right_connect button{
+            font-size: 1rem;
+            padding: .8rem;
+        }
+        .NavBar_box_right_open{
+            display: block;
+        }
+    .NavBar_box_right_menu{
+        position:fixed;
+        z-index: 111111;
+        background-color: #292f3f;
+        width: 100%;
+        flex-direction: coloum;
+        height: 100vh;
+        inset: 0 0 0 0 ;
+        padding: 4rem;
+        display: none;
+
+    }
+    .mobile_menu{
+        position:fixed;
+         display: block;
+         z-index: 111111;
+        background-color: #292f3f;
+        inset: 0 0 0 0 ;
+        text-align: center;
+        padding-top: 4rem;
+    }
+  
+    .mobile_menu_items{
+        margin-top: 1rem;
+    }
+    .mobile_menu_btn{
+        padding-top: 2rem;
+    }
+    .modelBox{
+        position: absolute;
+        inset: 0 0 -70% 0%;
+    }
+} */
+.NavBar {
+    width: 80%;
+    margin: 3rem auto;
+    position: relative;
+    /* z-index: 100; */
+}
+
+.NavBar_box {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    gap: 2rem;
+}
+.NavBar_box_right{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.NavBar_box_right_menu {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    border-bottom:2px solid transparent;
+    transition: all .3s ease-in-out;
+}
+
+.NavBar_box_right_menu_items {
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #a0a0a0;
+}
+
+.NavBar_box_right_menu_items:hover {
+    color: var(--primary-green);
+}
+
+.active_btn {
+    color: var(--primary-green) !important;
+    border-bottom: 2px solid var(--primary-green);
+    padding-bottom: .2rem;
+}
+.NavBar_box_right_connect {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+/* Connect Wallet Button */
+.NavBar_box_right_connect button {
+    background-color: transparent;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--secondary-purple);
+    border-radius: .5rem;
+    font-size: 1rem;
+    color: var(--secondary-purple);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    transition: 0.3s;
+}
+
+.NavBar_box_right_connect button:hover {
+    background-color: var(--secondary-purple);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(188, 19, 254, 0.4);
+}
+.NavBar_box_right_close{
+    display: none;
+}
+.NavBar_box_right_open{
+    display: none;
+}
+
+.mobile_menu{
+    display:none;
+}
+
+ .modelBox {
+    position: fixed;
+    inset: 0 0 0 0;
+    background-color: rgba(17, 17, 17, 0.95); 
+    backdrop-filter: blur(8px); 
+    z-index: 77777777;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} 
+/* .modelBox{
+    position: fixed;
+    inset: 0 0 0 0;
+    background-color: #292f3f;
+    z-index: 77777777;
+} */
+/* Mobile adjustments */
+ @media only screen and (max-width: 35em){
+    .NavBar{
+        width: 90%;
+        margin: 2rem auto;
+        }
+        .NavBar_box{
+            grid-template-columns: .6fr 2fr;
+            justify-content: space-between;
+        }
+        .NavBar_box_right_connect button{
+            font-size: 1rem;
+            padding: .8rem;
+            /* color: var(--primary-green); */
+        }
+        .NavBar_box_right_open{
+            display: block;
+        }
+    .NavBar_box_right_menu{
+        position:fixed;
+        z-index: 111111;
+        background-color: #292f3f;
+        width: 100%;
+        flex-direction: coloum;
+        height: 100vh;
+        inset: 0 0 0 0 ;
+        padding: 4rem;
+        display: none;
+
+    }
+    .mobile_menu{
+        position:fixed;
+         display: block;
+         z-index: 111111;
+        /* background-color: #292f3f; */
+        background-color: var(--bg-color);
+        inset: 0 0 0 0 ;
+        text-align: center;
+        padding-top: 4rem;
+        border-left: 2px solid var(--secondary-purple);
+    }
+  
+    .mobile_menu_items{
+        margin-top: 1rem;
+        
+    }
+    .mobile_menu_items:hover {
+        color: var(--primary-green);
+    }
+    .active_btn {
+        color: var(--primary-green) !important;
+        /* border-bottom: none;  */
+    }
+    .mobile_menu_btn{
+        padding-top: 2rem;
+        
+    }
+    .modelBox{
+        position: fixed;
+        inset: 0 ;
+    }
+    /* .modelBox{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%; 
+        height: 100%;
+        backdrop-filter: blur(12px);
+        z-index: 9999999;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start; 
+        padding-top: 2rem;
+        overflow-y: auto; 
+        -webkit-overflow-scrolling: touch;
+    }
+    .modelBox > div {
+        width: 100% !important;
+        max-width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        
+    } */
+} 

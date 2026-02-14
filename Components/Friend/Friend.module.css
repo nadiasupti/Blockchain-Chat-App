@@ -1,0 +1,47 @@
+.Friend{
+    width:80%;
+    margin:1rem auto;
+}
+.Friend_box{
+    display:grid;
+    grid-template-columns: 350px 1fr;
+    gap:2rem;
+    height: 85vh;
+}    
+.Friend_box_left{
+    background-color: #161416; 
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    border-radius: .5rem;
+    padding: 1rem;
+    overflow-y: auto; 
+    transition: all 0.3s ease;
+}
+.Friend_box_left::-webkit-scrollbar {
+    width: 4px;
+}
+
+.Friend_box_left::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+.Friend_box_right {
+    background-color: var(--card-bg);
+    border-radius: 1rem;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+}
+@media only screen and (max-width:35em){
+    .Friend_box {
+        grid-template-columns: 1fr; 
+        height: auto;
+    }
+    .Friend{
+        width:90%;
+        
+    }
+    .Friend_box{
+        grid-template-columns: 1fr;
+    }
+}

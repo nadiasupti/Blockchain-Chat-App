@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "ethers": "^6.16.0",
     "next": "16.1.2",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "web3modal": "^1.9.12"
   },
   "devDependencies": {
-    "eslint": "9.39.2",
-    "eslint-config-next": "16.1.2"
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.3"
   }
 }

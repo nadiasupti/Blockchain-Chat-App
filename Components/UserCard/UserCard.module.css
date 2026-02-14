@@ -1,0 +1,162 @@
+/* .usercard {
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: .5rem;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    width: 320px;  
+    margin: 1rem 1rem 1rem 7rem;
+}
+
+
+.UserCard_box {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.UserCard_box_img {
+    border-radius: 50%;
+    /* object-fit: cover; */
+    /*
+}
+
+.UserCard_box_info {
+    line-height: 1.4;
+}
+
+.UserCard_box_info h3 {
+    margin: 0.5rem 0 0.3rem 0;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+.UserCard_box_info p {
+    font-size: 0.9rem;
+    color: #cccccc;
+    margin-bottom: 1rem;
+}
+
+.UserCard_box_info button {
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    border: none;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: #f18303;
+    font-size: 0.9rem;
+    cursor: pointer;
+     font-size:1rem;
+    transition: all 0.3s ease;
+}
+
+.UserCard_box_info button:hover {
+    background-color: #f18303;
+    color: #000;
+}
+
+.number {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f18303, #ffb347);
+    color: #000;
+    
+    line-height: 0; 
+    z-index: 10;
+} */
+ .usercard {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    text-align: center;
+    padding: 1.5rem;
+    position: relative;
+    width: 320px;  
+    margin: 1rem;
+    transition: all 0.3s ease;
+}
+
+.usercard:hover {
+    transform: translateY(-8px);
+    border-color: var(--secondary-purple);
+    /* box-shadow: 0 10px 25px rgba(188, 19, 254, 0.2); */
+    box-shadow: 0 5px 15px rgba(188, 19, 254, 0.1);
+}
+
+.UserCard_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.UserCard_box_img {
+    border-radius: 50%;
+    border: 2px solid #1c9448; 
+    padding: 3px;
+}
+
+.UserCard_box_info h3 {
+    margin: 0.5rem 0 0.3rem 0;
+    font-size: 1.2rem;
+    color: var(--text-main);
+}
+
+.UserCard_box_info p {
+    font-size: 0.8rem;
+     font-family: monospace;
+    /*color: var(--primary-green); */
+    background: rgba(85, 135, 113, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px; 
+    color: #a0a0a0; 
+    margin-bottom: 1rem;
+}
+
+.UserCard_box_info button {
+    background-color: transparent;
+    width: 100%;
+    border: 1px solid var(--primary-green);
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    color: var(--primary-green);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.UserCard_box_info button:hover {
+    background-color: var(--primary-green);
+    color: #000;
+    /* box-shadow: 0 0 15px rgba(0, 255, 163, 0.5); */
+}
+
+.number {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    border-radius: 50%;
+    background: var(--secondary-purple); 
+    color: #fff;
+    z-index: 10;
+    /* box-shadow: 0 0 10px rgba(188, 19, 254, 0.4); */
+}
