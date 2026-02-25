@@ -1,4 +1,6 @@
 import '../styles/globals.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //internal import
 import { ChatAppProvider } from "../Context/ChatAppContext";
@@ -9,6 +11,7 @@ const MyApp =({ Component, pageProps }) =>(
     <ChatAppProvider> 
       <NavBar />
       <Component {...pageProps} />
+      <ToastContainer position="top-right" autoClose={5000} />
       </ChatAppProvider>
   </div>
 );

@@ -6,7 +6,8 @@
  //0x5788b8DaFc13c23956520578359E15c928dBdC28
 //0x5788b8DaFc13c23956520578359E15c928dBdC28
 //0xbfA831fc99e9b8cd7d9cd8DD39CEBb91fc67b4c7
+//0xDAFe0b7DC47274AD6338D0f24982bfc7D1AdA68b
 import chatAppJSON from './ChatApp.json'
-export const ChatAppAddress = "0xbfA831fc99e9b8cd7d9cd8DD39CEBb91fc67b4c7";
+export const ChatAppAddress = "0x974cd759d76000764636682e67064dB57337d7C0";
 
 export const ChatAppABI = chatAppJSON.abi;

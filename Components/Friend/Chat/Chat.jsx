@@ -7,7 +7,7 @@ import images from '../../../assets';
 import { converTime } from "../../../Utils/apifeature";
 import { Loader } from "../../index";
 
-const Chat = ({ functionName, readMessage, friendMsg, account, userName, Loading, currentUserName, currentUserAddress ,readUser, }) => {
+const Chat = ({ functionName, readMessage, friendMsg, account, userName, Loading, currentUserName, currentUserAddress ,readUser }) => {
   // use state
   const [message, setMessage] = useState("");
   const [chatData, setChatData] = useState({
@@ -16,7 +16,12 @@ const Chat = ({ functionName, readMessage, friendMsg, account, userName, Loading
   });
 
   const router = useRouter();
-
+  // const handleSend = async () => {
+    const handleSendMessage = async () => {
+    if (message.trim() === "") return;
+    await functionName({ msg: message, address: chatData.address });
+    setMessage(""); 
+  };
   useEffect(() => {
     if (!router.isReady) return;
     setChatData(router.query);
@@ -83,9 +88,29 @@ useEffect(() => {
               placeholder="Type your message here..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
               />
               <Image src={images.file} alt="file" width={50} height={50} />
-              {Loading == true?(<Loader />):(
+              {Loading ? (
+              <Loader />
+            ) : (
+              <Image 
+                src={images.send}
+                alt="send" 
+                width={50} 
+                height={50} 
+                onClick={handleSendMessage} 
+              />
+            )}
+          </div>
+        </div>
+      ) : ""}
+    </div>
+     </div>
+  );
+};
+export default Chat;
+              {/* {Loading == true?(<Loader />):(
                 <Image src={images.send}
               alt="file" width={50} height={50} 
               onClick={()=>functionName({msg: message, address: chatData.address})}/>
@@ -98,6 +123,6 @@ useEffect(() => {
    </div>
   </div>
   );
-};
+}; */}
 
-export default Chat;
+{/* export default Chat; */}

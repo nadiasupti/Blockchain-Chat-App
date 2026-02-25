@@ -26,9 +26,33 @@ Embark on a journey into the decentralized world of communication with **ChatBud
 * **Development Environment**: Hardhat & Ganache
 * **Blockchain Interaction**: Ethers.js
 * **Wallet**: MetaMask
-![Next.js](https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=nextdotjs&logoColor=white)
-![Solidity](https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=solidity&logoColor=white)
-![MetaMask](https://img.shields.io/badge/MetaMask-E2761B?style=for-the-badge&logo=metamask&logoColor=white)
+
+
+<p align="left">
+  <a href="https://nextjs.org/" target="_blank" rel="noreferrer"> 
+    <img src="https://cdn.worldvectorlogo.com/logos/next-js.svg" alt="nextjs" width="40" height="40"/> 
+  </a> 
+  &nbsp;
+  <a href="https://soliditylang.org/" target="_blank" rel="noreferrer"> 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Solidity_logo.svg" alt="solidity" width="40" height="40"/> 
+  </a> 
+  &nbsp;
+  <a href="https://ethereum.org/" target="_blank" rel="noreferrer"> 
+    <img src="https://raw.githubusercontent.com/otaviopace/ethereum-icons/main/icons/ethereum-branded.svg" alt="ethereum" width="40" height="40"/> 
+  </a> 
+  &nbsp;
+  <a href="https://metamask.io/" target="_blank" rel="noreferrer"> 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Alternative_Logo.svg" alt="metamask" width="40" height="40"/> 
+  </a> 
+  &nbsp;
+  <a href="https://hardhat.org/" target="_blank" rel="noreferrer"> 
+    <img src="https://raw.githubusercontent.com/nomiclabs/hardhat/master/docs/docs/assets/logo.svg" alt="hardhat" width="40" height="40"/> 
+  </a> 
+  &nbsp;
+  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> 
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> 
+  </a>
+</p>
 
 ---
 

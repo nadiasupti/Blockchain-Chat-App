@@ -1,6 +1,6 @@
 import React ,{ useState,useEffect, Children} from "react";
-
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 //INTERNAL import
 import { ChechIfWalletConnected , connectWallet , connectingWithContract} from "../Utils/apifeature";
@@ -16,11 +16,11 @@ export const ChatAppProvider =({ children }) => {
         const [userLists ,setUserLists] = useState([]);
         const [error,setError] = useState("");
         const [success, setSuccess] = useState("");
+        const [notifications, setNotifications] = useState([]);
 
     //chat user data
     const [currentUserName ,setCurrentUserName] = useState("");
     const [currentUserAddress ,setCurrentUserAddress] = useState("");
-
     const router = useRouter();
     //fetch data time of page data
     const fetchData = async()=>{
@@ -35,84 +35,148 @@ export const ChatAppProvider =({ children }) => {
             setUserName(userName);
             //get my friendlist 
             const friendLists = await contract.getMyFriendList();
-            setFriendLists(friendLists);
-            //get all app userlist
-            const userList = await contract.getAllAppUser();
-            setUserLists(userList);
+            // 
+            const cleanFriends = friendLists.map((f) => ({
+            pubkey: f[0],
+            name: f[1]
+        }));
+        setFriendLists(cleanFriends);
+
+        const userList = await contract.getAllAppUser();
+        const uniqueUsers = [];
+        const seenAddresses = new Set();
+
+        userList.forEach((u) => {
+            if (!seenAddresses.has(u.accountAddress.toLowerCase())) {
+                seenAddresses.add(u.accountAddress.toLowerCase());
+                uniqueUsers.push({
+                    name: u.name,
+                    accountAddress: u.accountAddress
+                });
+            }
+        });
+        
+        setUserLists(uniqueUsers);
+        const cleanAllUsers = userList.map((u) => ({
+            name: u.name,
+            accountAddress: u.accountAddress
+        }));
+        setUserLists(cleanAllUsers);
 
         }catch(error){
             // setError ("Please install and connect your wallet");
             console.log(error);
         }
     };
-//     const fetchData = async () => {
-//   try {
-//     console.log("🔥 fetchData started");
+// ================= NOTIFICATION LISTENER =================
+// const listenToNotifications = async (userAddress) => {
+//     try {
+//         const contract = await connectingWithContract();
+//         if (!userAddress) return;
 
-//     const contract = await connectingWithContract();
-//     console.log("📦 Contract:", contract);
+//         contract.removeAllListeners("MessageNotification");
 
-//     if (!contract) {
-//       setError("❌ Contract not connected");
-//       return;
+//         console.log("Listening for messages for:", userAddress);
+
+//         contract.on("MessageNotification", (from, to, timestamp, message) => {
+//             console.log("EVENT RECEIVED!", { from, to, message });
+            
+//             if (to.toLowerCase() === userAddress.toLowerCase()) {
+//                 const newNotification = {
+//                     from,
+//                     message,
+//                     time: new Date(Number(timestamp) * 1000).toLocaleString(),
+//                     read: false,
+//                 };
+
+//                 setNotifications((prev) => [newNotification, ...prev]);
+//                 toast.info(`New message from ${from.slice(0, 6)}...`, {
+//                     position: "top-right",
+//                     autoClose: 5000,
+//                 });
+//             }
+//         });
+//     } catch (error) {
+//         console.log("Notification listener error:", error);
 //     }
-
-//     const connectAccount = await connectWallet();
-//     console.log("👛 Account:", connectAccount);
-
-//     setAccount(connectAccount);
-
-//     const friendLists = await contract.getMyFriendList();
-//     console.log("👥 Friend list:", friendLists);
-//     setFriendLists(friendLists);
-
-//     const userlist = await contract.getAllAppUser();
-//     console.log("🌍 User list:", userlist);
-//     setUserLists(userlist);
-
-//   } catch (error) {
-//     console.error("🚨 fetchData error:", error);
-//     setError(error.message || "Something went wrong");
-//   }
 // };
 
-//     useEffect(() => {
-//         // fetchData();
-//         if (typeof window === "undefined") return; // skip SSR
+// useEffect(() => {
+//     const init = async () => {
+//         try {
+//             const connectedAccount = await ChechIfWalletConnected();
+//             if (connectedAccount) {
+//                 setAccount(connectedAccount);
+//                 await fetchData(); 
+//                 await listenToNotifications(connectedAccount);
+//             }
+//         } catch (err) {
+//             console.log("Initialization error", err);
+//         }
+//     };
 
-//   const init = async () => {
-//     try {
-//       const account = await ChechIfWalletConnected();
-//       if (!account) setError("Please connect your wallet");
-//       else setAccount(account);
-//     } catch (err) {
-//       setError("Please install and connect your wallet");
-//     }
-//   };
+//     init();
 
-//   init();
-//     },[]);
-useEffect(() => {
-  if (typeof window === "undefined") return;
-
-  const init = async () => {
+//     return () => {
+//         connectingWithContract().then(contract => {
+//             contract.removeAllListeners("MessageNotification");
+//         }).catch(e => console.log(e));
+//     };
+// }, [account]); 
+const listenToNotifications = async (currentUser) => {
     try {
-      const account = await ChechIfWalletConnected();
-      if (!account) {
-        setError("Please connect your wallet");
-      } else {
-        setAccount(account);
-        await fetchData(); 
-      }
-    } catch (err) {
-      setError("Please install and connect your wallet");
+        const contract = await connectingWithContract();
+        if (!currentUser) return;
+
+        contract.removeAllListeners("MessageNotification");
+
+        contract.on("MessageNotification", (from, to, timestamp, message) => {
+            if (to.toLowerCase() === currentUser.toLowerCase()) {
+                const newNotification = {
+                    from,
+                    message,
+                    time: new Date(Number(timestamp) * 1000).toLocaleString(),
+                    read: false,
+                    id: Date.now()
+                };
+
+                setNotifications((prev) => {
+                    const updated = [newNotification, ...prev];
+                    localStorage.setItem("user_notifications", JSON.stringify(updated));
+                    return updated;
+                });
+                
+                toast.info(`New message from ${from.slice(0, 6)}...`, {
+                        position: "top-right",
+                    });
+            }
+        });
+    } catch (error) {
+        console.log("Notification error:", error);
     }
-  };
+};
 
-  init();
-}, []);
+useEffect(() => {
+    const init = async () => {
+            const connectedAccount = await ChechIfWalletConnected();
+            if (connectedAccount) {
+                setAccount(connectedAccount);
+                await fetchData();
+                await listenToNotifications(connectedAccount);
+            }
+        };
 
- //read message
+        init();
+    const savedNotifications = localStorage.getItem("user_notifications");
+    if (savedNotifications) {
+        setNotifications(JSON.parse(savedNotifications));
+    }
+return () => {
+            connectingWithContract().then(contract => {
+                contract.removeAllListeners("MessageNotification");
+            }).catch(e => console.log(e));
+        };
+    }, [account]);
     const readMessage = async (friendAddress) =>{
         try {
             const contract = await connectingWithContract();
@@ -160,9 +224,14 @@ useEffect(() => {
             
         }
     };
+    
     //send message to ur friend
     const sendMessage= async({msg,address}) =>{
         try {
+        //     if (!msg || !address) return setError("Message or Address is empty!");
+
+        // const contract = await connectingWithContract();
+        // setLoading(true);
             // if(!msg || !address )
             //     return setError ("Please Type Your Message");
             const contract = await connectingWithContract();
@@ -170,9 +239,11 @@ useEffect(() => {
             setLoading(true);
             await addMessage.wait();
             setLoading(false);
-            window.location.reload();
+            // window.location.reload();
+            await readMessage(address);
         } catch (error) {
-            setError("Please reload and try again!");
+            setError("Message failed to send!");
+            console.log("Send Message Error:", error);
         }
     };
     //read info of user
@@ -187,7 +258,8 @@ useEffect(() => {
   }
     };
     return(
-        <ChatAppContext.Provider value ={{readMessage ,createAccount ,addFriends,sendMessage,readUser,connectWallet,ChechIfWalletConnected,account ,userName,friendLists,friendMsg,loading,userLists,error,success, currentUserName,currentUserAddress}}>  
+        <ChatAppContext.Provider value ={{readMessage ,createAccount ,addFriends,sendMessage,readUser,connectWallet,ChechIfWalletConnected,account ,
+        userName,friendLists,friendMsg,loading,userLists,error,success, currentUserName,currentUserAddress ,notifications,setNotifications,}}>  
             {children}
 
         </ChatAppContext.Provider>

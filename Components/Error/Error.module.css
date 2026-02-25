@@ -8,9 +8,9 @@
     text-align: center;
     border-radius: 50px;
     padding: 2rem;
-    background: #f18303;
-    box-shadow: 5px 5px 10px #cd6f03 ,
-    -5px -5px 10px #ff9703
+    background: #611082;
+    box-shadow: 5px 5px 10px #8e4a82 ,
+    -5px -5px 10px #8e4a82
 }
 @media only screen and (max-width: 35em) {
     .Error{

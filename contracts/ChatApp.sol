@@ -23,7 +23,13 @@ contract ChatApp {
         string name;
         address accountAddress;
     }
-
+    //event for notification
+    event MessageNotification(
+    address indexed from,
+    address indexed to,
+    uint256 timestamp,
+    string message
+);
     AllUserStruct[] getAllUsers;
 
     mapping(address => User) userList;
@@ -90,8 +96,9 @@ contract ChatApp {
 
         bytes32 chatCode = _getChatCode(msg.sender, friend_key);
         allMessages[chatCode].push(Message(msg.sender, block.timestamp, _msg));
+    //notification
+        emit MessageNotification(msg.sender, friend_key, block.timestamp, _msg);
     }
-
     function readMessage(address friend_key) external view returns (Message[] memory) {
         bytes32 chatCode = _getChatCode(msg.sender, friend_key);
         return allMessages[chatCode];
