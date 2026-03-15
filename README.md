@@ -21,8 +21,8 @@ Embark on a journey into the decentralized world of communication with **ChatBud
 ---
 
 ## 🛠 Tech Stack
-* **Frontend**: Next.js, CSS Modules
-* **Smart Contracts**: Solidity
+* **Frontend**: Next.js & React
+* **Smart Contracts**: Solidity ^0.8.24
 * **Development Environment**: Hardhat & Ganache
 * **Blockchain Interaction**: Ethers.js
 * **Wallet**: MetaMask
