@@ -1,36 +1,5 @@
- /* @import url('https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&family=Tiro+Bangla:ital@0;1&display=swap');
- html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: 'SN Pro', 'Tiro Bangla', sans-serif;
-  background-color: #2c3346;
-  color: #ffffff;
-}
-
-::-webkit-scrollbar{
-  display: none;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
- @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-} */ 
 @import url('https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&family=Tiro+Bangla:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
 
 :root {
   --bg-color: #111111;
@@ -38,28 +7,45 @@ a {
   --secondary-purple: #BC13FE;
   --border-color: #333333;
   --card-bg: #1A1A1A;
+
+  /* ✅ font tokens — use these everywhere instead of hardcoding font names */
+  --font-body:  'SN Pro', 'Tiro Bangla', sans-serif;
+  --font-title: 'Orbitron', sans-serif;
+  --font-mono:  'Share Tech Mono', 'Courier New', monospace;
 }
 
-html,
-body {
+html, body {
   padding: 0;
   margin: 0;
-  font-family: 'SN Pro', 'Tiro Bangla', sans-serif;
+  font-family: var(--font-body);
   background-color: var(--bg-color);
   color: #ffffff;
   background-image: radial-gradient(circle at 50% -20%, #221035 0%, #111111 50%);
   background-attachment: fixed;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
+h1 {
+  font-family: var(--font-title);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  /* ✅ consistent glow on every h1 — no need to repeat in each module */
+  text-shadow:
+    0 0 30px rgba(0, 255, 163, 0.25),
+    0 0 70px rgba(188, 19, 254, 0.12);
 }
+
+h2, h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-green); 
+  background: var(--primary-green);
 }
 
 a {
@@ -67,31 +53,29 @@ a {
   text-decoration: none;
   transition: 0.3s ease;
 }
+a:hover { color: var(--primary-green); }
 
-a:hover {
-  color: var(--primary-green);
+* { box-sizing: border-box; }
+
+/* .neon_button { ... } */
+.title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  /* font-family: no longer needed — global h1 sets Orbitron */
+  /* text-shadow: no longer needed — global h1 sets the glow */
+  margin: 0.25rem 0 0.35rem;
+  color: #fff;
 }
 
-* {
-  box-sizing: border-box;
-}
-/* Custom Neon Button Component */
-/* .neon_button {
-  background: transparent;
-  border: 1px solid var(--primary-green);
-  color: var(--primary-green);
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: inset 0 0 5px rgba(0, 255, 163, 0.2), 0 0 5px rgba(0, 255, 163, 0.2);
-  transition: all 0.3s ease; 
+.tag {
+  font-size: 0.7rem;
+  color: #00FFA3;
+  letter-spacing: 0.2em;
+  opacity: 0.7;
 }
 
-.neon_button:hover {
-  background: var(--primary-green);
-  color: #000;
-  box-shadow: 0 0 20px rgba(0, 255, 163, 0.6);
-} */
+.subtitle {
+  font-size: 0.75rem;
+  color: #555555;
+  letter-spacing: 0.25em;
+  margin: 0;
+}

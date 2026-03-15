@@ -1,0 +1,422 @@
+/* Profile.module.css — matches global theme:
+   bg #111111, green #00FFA3, purple #BC13FE, font SN Pro */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+/* ── page ── */
+.page {
+  min-height: 100vh;
+  background: transparent;
+  color: #ffffff;
+  font-family: 'SN Pro', 'Tiro Bangla', sans-serif;
+  position: relative;
+  overflow: hidden;
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+/* subtle scanlines to stay on-brand */
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 163, 0.012) 2px,
+    rgba(0, 255, 163, 0.012) 4px
+  );
+  animation: scan 12s linear infinite;
+}
+@keyframes scan {
+  from { background-position: 0 0; }
+  to   { background-position: 0 100vh; }
+}
+
+/* ── container ── */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* ── header ── */
+.header {
+  text-align: center;
+  margin-bottom: 2.8rem;
+  animation: slideDown 0.55s ease both;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tag {
+  font-size: 0.72rem;
+  color: #00FFA3;
+  letter-spacing: 0.2em;
+  opacity: 0.7;
+  text-transform: lowercase;
+}
+
+.title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin: 0.3rem 0 0.4rem;
+  color: #ffffff;
+  text-shadow:
+    0 0 30px rgba(0, 255, 163, 0.3),
+    0 0 80px rgba(188, 19, 254, 0.15);
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: #555555;
+  letter-spacing: 0.25em;
+  margin: 0;
+}
+
+/* ── grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.4rem;
+  align-items: start;
+  animation: slideUp 0.6s ease 0.1s both;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 680px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* ── LEFT ── */
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.avatarCard {
+  background: #1A1A1A;
+  border: 1px solid #333333;
+  border-top: 2px solid #BC13FE;
+  border-radius: 8px;
+  padding: 2rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.avatarCard:hover {
+  border-color: #00FFA3;
+  border-top-color: #BC13FE;
+}
+
+.avatarGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% -10%, rgba(188, 19, 254, 0.08) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.avatarSvg {
+  width: 110px;
+  height: 110px;
+  border-radius: 8px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 14px var(--accent, #00FFA3));
+  transition: filter 0.3s, transform 0.3s;
+}
+.avatarSvg:hover {
+  filter: drop-shadow(0 0 26px var(--accent, #00FFA3));
+  transform: scale(1.04);
+}
+
+.avatarHandle {
+  font-size: 0.72rem;
+  color: #00FFA3;
+  letter-spacing: 0.14em;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* stats */
+.statsRow {
+  background: #1A1A1A;
+  border: 1px solid #333333;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.statVal {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #00FFA3;
+  line-height: 1;
+}
+
+.statKey {
+  font-size: 0.58rem;
+  color: #555555;
+  letter-spacing: 0.15em;
+}
+
+.statDivider {
+  width: 1px;
+  height: 36px;
+  background: #333333;
+}
+
+/* ── RIGHT ── */
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* card */
+.card {
+  background: #1A1A1A;
+  border: 1px solid #333333;
+  border-radius: 8px;
+  padding: 1.2rem 1.5rem;
+  transition: border-color 0.25s;
+}
+.card:hover {
+  border-color: rgba(0, 255, 163, 0.35);
+}
+
+.cardLabel {
+  display: block;
+  font-size: 0.63rem;
+  color: #00FFA3;
+  letter-spacing: 0.22em;
+  opacity: 0.7;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+/* field row */
+.fieldRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.fieldValue {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+.empty {
+  font-style: italic;
+  font-weight: 400;
+  color: #444444;
+  font-size: 0.9rem;
+}
+
+/* edit block */
+.editBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.input {
+  background: #111111;
+  border: 1px solid rgba(0, 255, 163, 0.45);
+  border-radius: 6px;
+  color: #00FFA3;
+  font-family: 'SN Pro', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.6rem 0.9rem;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  caret-color: #00FFA3;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input:focus {
+  border-color: #00FFA3;
+  box-shadow: 0 0 0 2px rgba(0, 255, 163, 0.12);
+}
+.input::placeholder { color: #333333; }
+
+.btnRow {
+  display: flex;
+  gap: 0.6rem;
+}
+
+/* ── buttons ── */
+.btnEdit, .btnSave, .btnCancel, .btnCopy {
+  font-family: 'SN Pro', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0.48rem 1.1rem;
+  border: 1px solid;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btnEdit {
+  background: transparent;
+  border-color: rgba(0, 255, 163, 0.4);
+  color: #00FFA3;
+}
+.btnEdit:hover {
+  background: rgba(0, 255, 163, 0.08);
+  border-color: #00FFA3;
+  box-shadow: 0 0 10px rgba(0, 255, 163, 0.2);
+}
+
+/* purple CTA for save — uses the app's --secondary-purple */
+.btnSave {
+  flex: 1;
+  background: #BC13FE;
+  border-color: #BC13FE;
+  color: #ffffff;
+  font-weight: 700;
+}
+.btnSave:hover:not(:disabled) {
+  background: #cc44ff;
+  box-shadow: 0 0 18px rgba(188, 19, 254, 0.45);
+}
+.btnSave:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.btnCancel {
+  background: transparent;
+  border-color: rgba(255, 80, 80, 0.35);
+  color: #ff6464;
+}
+.btnCancel:hover {
+  background: rgba(255, 80, 80, 0.08);
+  border-color: #ff6464;
+}
+
+/* address */
+.address {
+  font-size: 0.88rem;
+  color: #aaaaaa;
+  letter-spacing: 0.03em;
+  word-break: break-all;
+}
+
+.fullAddr {
+  display: block;
+  font-size: 0.6rem;
+  color: #444444;
+  word-break: break-all;
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+.btnCopy {
+  background: transparent;
+  border-color: #333333;
+  color: #666666;
+  flex-shrink: 0;
+}
+.btnCopy:hover:not(:disabled) {
+  border-color: rgba(0, 255, 163, 0.4);
+  color: #00FFA3;
+}
+.btnCopied {
+  border-color: #00FFA3 !important;
+  color: #00FFA3 !important;
+}
+.btnCopy:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+/* network */
+.networkRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00FFA3;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px #00FFA3;
+  animation: blink 2.2s ease-in-out infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px #00FFA3; }
+  50%       { opacity: 0.5; box-shadow: 0 0 16px #00FFA3; }
+}
+
+.networkName { color: #aaaaaa; font-size: 0.88rem; }
+.chainId     { color: #444444; font-size: 0.72rem; margin-left: auto; }
+
+/* friends */
+.friendList {
+  display: flex;
+  flex-direction: column;
+}
+
+.friendRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #222222;
+}
+.friendRow:last-child { border-bottom: none; }
+
+.arrow      { color: #00FFA3; font-size: 0.62rem; flex-shrink: 0; }
+.friendName { color: #cccccc; font-size: 0.84rem; flex: 1; }
+.friendAddr { color: #444444; font-size: 0.7rem; }
+.more       { font-size: 0.7rem; color: #555555; text-align: right; padding-top: 0.35rem; }
+
+/* feedback */
+.feedback {
+  padding: 0.75rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  animation: slideUp 0.3s ease;
+}
+.feedbackOk  { background: rgba(0, 255, 163, 0.07);  border: 1px solid rgba(0, 255, 163, 0.3);  color: #00FFA3; }
+.feedbackErr { background: rgba(255, 100, 100, 0.07); border: 1px solid rgba(255, 100, 100, 0.3); color: #ff6464; }
+
+/* footer */
+.footer {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.62rem;
+  color: #333333;
+  letter-spacing: 0.2em;
+  animation: slideUp 0.8s ease 0.3s both;
+}

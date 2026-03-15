@@ -107,4 +107,20 @@ contract ChatApp {
     function getAllAppUser() public view returns (AllUserStruct[] memory) {
         return getAllUsers;
     }
+    //update username
+    function updateUsername(string calldata name) external {
+    require(checkUserExists(msg.sender), "User not registered");
+    require(bytes(name).length > 0, "Name cannot be empty");
+
+    //  update name in userList mapping
+    userList[msg.sender].name = name;
+
+    //  also update name in getAllUsers array so AllUsers page stays in sync
+    for (uint256 i = 0; i < getAllUsers.length; i++) {
+        if (getAllUsers[i].accountAddress == msg.sender) {
+            getAllUsers[i].name = name;
+            break;
+        }
+    }
+}
 }

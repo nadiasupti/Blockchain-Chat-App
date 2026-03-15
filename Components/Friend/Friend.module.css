@@ -1,47 +1,108 @@
-.Friend{
-    width:80%;
-    margin:1rem auto;
+/* Friend.module.css */
+.page_header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  animation: fadeDown 0.5s ease both;
 }
-.Friend_box{
-    display:grid;
-    grid-template-columns: 350px 1fr;
-    gap:2rem;
-    height: 85vh;
-}    
-.Friend_box_left{
-    background-color: #161416; 
-    border: 1px solid var(--border-color);
-    border-radius: 1rem;
-    border-radius: .5rem;
-    padding: 1rem;
-    overflow-y: auto; 
-    transition: all 0.3s ease;
-}
-.Friend_box_left::-webkit-scrollbar {
-    width: 4px;
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
+.tag {
+  font-size: 0.7rem;
+  color: #00FFA3;
+  letter-spacing: 0.2em;
+  opacity: 0.7;
+  font-family: 'SN Pro', 'Tiro Bangla', sans-serif;
+}
+
+.title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  margin: 0.2rem 0 0.3rem;
+  letter-spacing: 0.08em;
+  color: #fff;
+  font-family: 'SN Pro', 'Tiro Bangla', sans-serif;
+  text-shadow:
+    0 0 30px rgba(0, 255, 163, 0.25),
+    0 0 70px rgba(188, 19, 254, 0.12);
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: #555;
+  letter-spacing: 0.2em;
+  margin: 0;
+  font-family: 'SN Pro', 'Tiro Bangla', sans-serif;
+}
+
+/* ── layout ── */
+.friend {
+  width: 89%;
+  margin: 1rem auto;
+}
+
+.Friend_box {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  gap: 2rem;
+  height: 85vh;
+}
+
+/* left panel — friends list */
+.Friend_box_left {
+  background-color: #161416;
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  padding: 1rem;
+  overflow-y: auto;
+  transition: border-color 0.3s;
+}
+
+.Friend_box_left:hover {
+  border-color: rgba(0, 255, 163, 0.15);
+}
+
+.Friend_box_left::-webkit-scrollbar { width: 4px; }
 .Friend_box_left::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 10px;
+  background: var(--border-color);
+  border-radius: 10px;
 }
+
+/* left panel header label */
+.panel_label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #BC13FE;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: 'SN Pro', 'Tiro Bangla', sans-serif;
+  padding: 0 0.5rem 0.8rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+/* right panel — chat window */
 .Friend_box_right {
-    background-color: var(--card-bg);
-    border-radius: 1rem;
-    overflow: hidden; 
-    display: flex;
-    flex-direction: column;
+  background-color: var(--card-bg);
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  transition: border-color 0.3s;
 }
-@media only screen and (max-width:35em){
-    .Friend_box {
-        grid-template-columns: 1fr; 
-        height: auto;
-    }
-    .Friend{
-        width:90%;
-        
-    }
-    .Friend_box{
-        grid-template-columns: 1fr;
-    }
+
+.Friend_box_right:hover {
+  border-color: rgba(0, 255, 163, 0.1);
+}
+
+@media only screen and (max-width: 35em) {
+  .friend { width: 90%; }
+  .Friend_box {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
 }

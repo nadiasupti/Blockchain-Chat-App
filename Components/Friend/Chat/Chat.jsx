@@ -110,19 +110,4 @@ useEffect(() => {
   );
 };
 export default Chat;
-              {/* {Loading == true?(<Loader />):(
-                <Image src={images.send}
-              alt="file" width={50} height={50} 
-              onClick={()=>functionName({msg: message, address: chatData.address})}/>
-          )}
-          </div>
-      </div>
-        ):(
-        ""
-  )}
-   </div>
-  </div>
-  );
-}; */}
-
-{/* export default Chat; */}
+              

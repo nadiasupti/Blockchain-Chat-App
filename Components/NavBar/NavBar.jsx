@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { MdNotifications } from "react-icons/md";
 
 // Internal imports
@@ -17,6 +18,7 @@ const NavBar = () => {
     { menu: "Setting", link: "setting" },
     { menu: "FAQS", link: "faqs" },
     { menu: "Terms of use", link: "terms" },
+    // { menu: "Profile", link: "profile" },
   ];
 
   // States
@@ -24,7 +26,7 @@ const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [openModel, setOpenModel] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
-
+  const router = useRouter();
   // Context
   const { 
     account, 
@@ -36,10 +38,22 @@ const NavBar = () => {
     setNotifications 
   } = useContext(ChatAppContext);
 
+  useEffect(() => {
+  if (!showNotif) return;
+  let timeoutId;
+  const handler = () => setShowNotif(false);
+  timeoutId = setTimeout(() => {
+    document.addEventListener("click", handler);
+  }, 0);
+
+  return () => {
+    clearTimeout(timeoutId);
+    document.removeEventListener("click", handler);
+  };
+}, [showNotif]);
+
   const handleNotificationToggle = () => {
     setShowNotif(!showNotif);
-    
-    
     if (!showNotif) {
       const readNotifications = notifications.map(n => ({
         ...n,
@@ -48,12 +62,26 @@ const NavBar = () => {
       setNotifications(readNotifications);
     }
   };
-
+  const handleLogoClick = async () => {
+    if (!account) {
+      await connectWallet();
+    }
+    setOpenModel(true);
+  };
+  const handleAccountClick = () => {
+    if (userName) {
+      router.push("/profile"); // already has account → go to profile
+    } else {
+      setOpenModel(true);      // no account yet → open create account modal
+    }
+  };
   return (
     <div className={Style.NavBar}>
       <div className={Style.NavBar_box}>
         <div className={Style.NavBar_box_left}>
-          <Image src={images.logo} alt='logo' width={50} height={50} priority />
+          <div onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+            <Image src={images.logo} alt='logo' width={50} height={50} priority />
+          </div>
         </div>
 
         <div className={Style.NavBar_box_right}>
@@ -108,7 +136,13 @@ const NavBar = () => {
                   )}
                 </div>
                 {notifications.length > 0 && (
-                  <button className={Style.clear_btn} onClick={() => setNotifications([])}>
+                  <button className={Style.clear_btn} 
+                  // onClick={() => setNotifications([])}
+                  onClick={() => {
+                  setNotifications([]);
+                  localStorage.removeItem("user_notifications");
+                }}
+                  >
                     Clear All
                   </button>
                 )}
@@ -123,7 +157,7 @@ const NavBar = () => {
                 <span>Connect Wallet</span>
               </button>
             ) : (
-              <button onClick={() => setOpenModel(true)}>
+              <button onClick={handleAccountClick}>
                 <Image
                   src={userName ? images.accountName : images.create2}
                   alt="Account image"

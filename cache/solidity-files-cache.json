@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\mern\\blockchain dev\\chatapp\\contracts\\ChatApp.sol": {
-      "lastModificationDate": 1771631159370,
-      "contentHash": "a288884d6b4108a69102f2e13eda938c",
+      "lastModificationDate": 1772229001579,
+      "contentHash": "9c44ab270f8cdb677b3d03abd3f3af65",
       "sourceName": "contracts/ChatApp.sol",
       "solcConfig": {
         "version": "0.8.24",

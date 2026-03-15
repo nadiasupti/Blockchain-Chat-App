@@ -104,36 +104,22 @@ export const connectingWithContract = async () => {
 // time convert
 export const converTime = (time) => {
   const newTimer = new Date(Number(time) * 1000);
+  
+  // Pad single digit numbers with leading zero
+  const pad = (num) => String(num).padStart(2, '0');
+  
   const realTime = 
-    newTimer.getHours() +
+    pad(newTimer.getHours()) +
     ":" +
-    newTimer.getMinutes() +
+    pad(newTimer.getMinutes()) +
     ":" +
-    newTimer.getSeconds() +
-    "  Date: " +
-    newTimer.getDate() +
+    pad(newTimer.getSeconds()) +
+    " Date: " +
+    pad(newTimer.getDate()) +
     "/" +
-    (newTimer.getMonth() + 1) +
+    pad(newTimer.getMonth() + 1) +
     "/" +
     newTimer.getFullYear();
     
   return realTime;
-  // const newTimer = new Date(Number(time.toNumber())) ;
-  // const realTime = 
-  //  newTimer.getHours()+
-  //  "/"+
-  //   newTimer.getMinutes()+
-  //   "/"+
-  //   newTimer.getSeconds()+
-  //   "Date:"+
-  //   newTimer.getDate()+
-  //   "/"+
-  //   (newTimer.getMonth() + 1)+
-  //   "/"+
-  //   newTimer.getFullYear();
-  // return realTime;
-  // const newTime = new Date(Number(time) * 1000);
-
-  // return `${newTime.getHours()}:${newTime.getMinutes()}:${newTime.getSeconds()}
-  // Date: ${newTime.getDate()}/${newTime.getMonth() + 1}/${newTime.getFullYear()}`;
 };

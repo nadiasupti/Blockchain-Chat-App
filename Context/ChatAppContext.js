@@ -1,4 +1,4 @@
-import React ,{ useState,useEffect, Children} from "react";
+import React ,{ useState,useEffect,useRef, Children} from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
@@ -22,6 +22,9 @@ export const ChatAppProvider =({ children }) => {
     const [currentUserName ,setCurrentUserName] = useState("");
     const [currentUserAddress ,setCurrentUserAddress] = useState("");
     const router = useRouter();
+    // contractRef stores the contract so cleanup can remove listeners from the SAME instance
+    const contractRef = useRef(null);
+
     //fetch data time of page data
     const fetchData = async()=>{
         try{
@@ -57,11 +60,11 @@ export const ChatAppProvider =({ children }) => {
         });
         
         setUserLists(uniqueUsers);
-        const cleanAllUsers = userList.map((u) => ({
-            name: u.name,
-            accountAddress: u.accountAddress
-        }));
-        setUserLists(cleanAllUsers);
+        // const cleanAllUsers = userList.map((u) => ({
+        //     name: u.name,
+        //     accountAddress: u.accountAddress
+        // }));
+        // setUserLists(cleanAllUsers);
 
         }catch(error){
             // setError ("Please install and connect your wallet");
@@ -69,95 +72,47 @@ export const ChatAppProvider =({ children }) => {
         }
     };
 // ================= NOTIFICATION LISTENER =================
-// const listenToNotifications = async (userAddress) => {
-//     try {
-//         const contract = await connectingWithContract();
-//         if (!userAddress) return;
-
-//         contract.removeAllListeners("MessageNotification");
-
-//         console.log("Listening for messages for:", userAddress);
-
-//         contract.on("MessageNotification", (from, to, timestamp, message) => {
-//             console.log("EVENT RECEIVED!", { from, to, message });
-            
-//             if (to.toLowerCase() === userAddress.toLowerCase()) {
-//                 const newNotification = {
-//                     from,
-//                     message,
-//                     time: new Date(Number(timestamp) * 1000).toLocaleString(),
-//                     read: false,
-//                 };
-
-//                 setNotifications((prev) => [newNotification, ...prev]);
-//                 toast.info(`New message from ${from.slice(0, 6)}...`, {
-//                     position: "top-right",
-//                     autoClose: 5000,
-//                 });
-//             }
-//         });
-//     } catch (error) {
-//         console.log("Notification listener error:", error);
-//     }
-// };
-
-// useEffect(() => {
-//     const init = async () => {
-//         try {
-//             const connectedAccount = await ChechIfWalletConnected();
-//             if (connectedAccount) {
-//                 setAccount(connectedAccount);
-//                 await fetchData(); 
-//                 await listenToNotifications(connectedAccount);
-//             }
-//         } catch (err) {
-//             console.log("Initialization error", err);
-//         }
-//     };
-
-//     init();
-
-//     return () => {
-//         connectingWithContract().then(contract => {
-//             contract.removeAllListeners("MessageNotification");
-//         }).catch(e => console.log(e));
-//     };
-// }, [account]); 
 const listenToNotifications = async (currentUser) => {
     try {
-        const contract = await connectingWithContract();
+        // const contract = await connectingWithContract();
         if (!currentUser) return;
+        const contract = await connectingWithContract();
+        contractRef.current = contract;
+        
+contractRef.current.removeAllListeners("MessageNotification");
 
-        contract.removeAllListeners("MessageNotification");
+            contractRef.current.on("MessageNotification", (from, to, timestamp, message) => {
+                if (to.toLowerCase() === currentUser.toLowerCase()) {
+                    const newNotification = {
+                        from,
+                        message,
+                        time: new Date(Number(timestamp) * 1000).toLocaleString(),
+                        read: false,
+                        id: Date.now()     
+                    };
 
-        contract.on("MessageNotification", (from, to, timestamp, message) => {
-            if (to.toLowerCase() === currentUser.toLowerCase()) {
-                const newNotification = {
-                    from,
-                    message,
-                    time: new Date(Number(timestamp) * 1000).toLocaleString(),
-                    read: false,
-                    id: Date.now()
-                };
+                    setNotifications((prev) => {
+                        const updated = [newNotification, ...prev];
+                        localStorage.setItem("user_notifications", JSON.stringify(updated));
+                        return updated;
+                    });
 
-                setNotifications((prev) => {
-                    const updated = [newNotification, ...prev];
-                    localStorage.setItem("user_notifications", JSON.stringify(updated));
-                    return updated;
-                });
-                
-                toast.info(`New message from ${from.slice(0, 6)}...`, {
+                    toast.info(`New message from ${from.slice(0, 6)}...`, {
                         position: "top-right",
                     });
-            }
-        });
-    } catch (error) {
-        console.log("Notification error:", error);
-    }
-};
-
+                }
+            });
+        } catch (error) {
+            console.log("Notification error:", error);
+        }
+    };
 useEffect(() => {
-    const init = async () => {
+        const savedNotifications = localStorage.getItem("user_notifications");
+        if (savedNotifications) {
+            setNotifications(JSON.parse(savedNotifications));
+        }
+
+        const init = async () => {
             const connectedAccount = await ChechIfWalletConnected();
             if (connectedAccount) {
                 setAccount(connectedAccount);
@@ -167,16 +122,13 @@ useEffect(() => {
         };
 
         init();
-    const savedNotifications = localStorage.getItem("user_notifications");
-    if (savedNotifications) {
-        setNotifications(JSON.parse(savedNotifications));
-    }
-return () => {
-            connectingWithContract().then(contract => {
-                contract.removeAllListeners("MessageNotification");
-            }).catch(e => console.log(e));
+        return () => {
+            if (contractRef.current) {
+                contractRef.current.removeAllListeners("MessageNotification");
+            }
         };
-    }, [account]);
+
+    }, []); 
     const readMessage = async (friendAddress) =>{
         try {
             const contract = await connectingWithContract();
@@ -189,39 +141,84 @@ return () => {
     //create account
     const createAccount = async({name, accountAddress}) =>{
         try {
-            // if(!name || !accountAddress)
-            //     return setError("Name and AccountAddress , cannot be empty");
-
+            setError(""); // Clear any previous errors
+            setSuccess(""); // Clear any previous success messages
+            
             const contract = await connectingWithContract();
             const getCreatedUser = await  contract.createAccount(name);
             setLoading(true);
             await getCreatedUser.wait();
             setLoading(false);
-            // window.location.reload();
             setSuccess("Account Created Successfully!");
             await fetchData(); 
         } catch (error) {
-             setError("ERROR WHILE CREATING YOUR ACCOUNT .PLEASE RELOAD YOUR BROWSER AGAIN");
-           
+            setLoading(false);
+            console.log("createAccount error:", error);
+            
+            if (error.message.includes("User already exists")) {
+                setError("Account already exists!");
+            } else if (error.message.includes("Username cannot be empty")) {
+                setError("Username cannot be empty");
+            } else {
+                setError("ERROR WHILE CREATING YOUR ACCOUNT. PLEASE RELOAD YOUR BROWSER AGAIN");
+            }
         }
     };
     //add ur friends
     const addFriends = async({name,accountAddress})=>{
         try {
-            // if (name || accountAddress)
-            //     return setError("Please provibe your contract");
-            if (!name || !accountAddress) return setError("Name or Address missing!"); 
-            const contract= await connectingWithContract();
-            const addMyFriend = await contract.addFriend(accountAddress,name);
+            setError(""); // Clear any previous errors
+            setSuccess(""); // Clear any previous success messages
+            
+            if (!name || !accountAddress) {
+                setError("Name or Address missing!"); 
+                return;
+            }
+            
+            const contract = await connectingWithContract();
+            if (!contract) {
+                setError("Failed to connect to contract. Please check your wallet.");
+                return;
+            }
+            
             setLoading(true);
+            const addMyFriend = await contract.addFriend(accountAddress, name);
             await addMyFriend.wait();
+            
             setLoading(false);
-            router.push("/");
-            // window.location.reload();
+            setSuccess("Friend added successfully!");
+            await fetchData(); // Refresh friend list
+            
+            // Small delay before redirect
+            setTimeout(() => {
+                router.push("/");
+            }, 1000);
+            
         } catch (error) {
             setError("Something went wrong while you are adding friends, try again!");
             console.log(error);
+            // setLoading(false);
+            // console.log("Full error object:", error);
+            // console.log("Error message:", error?.message);
+            // console.log("Error reason:", error?.reason);
+            // console.log("Error code:", error?.code);
             
+            // // Provide specific error messages
+            // const errorMsg = error?.reason || error?.message || String(error);
+            
+            // if (errorMsg.includes("User already")) {
+            //     setError("Already friends with this user!");
+            // } else if (errorMsg.includes("Cannot add yourself")) {
+            //     setError("You cannot add yourself as a friend!");
+            // } else if (errorMsg.includes("User not registered")) {
+            //     setError("User not registered. Please check the address!");
+            // } else if (errorMsg.includes("Create an account first")) {
+            //     setError("Please create an account first!");
+            // } else if (errorMsg.includes("user rejected")) {
+            //     setError("Transaction rejected by user.");
+            // } else {
+            //     setError(`Failed: ${errorMsg}`);
+            // }
         }
     };
     
@@ -244,8 +241,43 @@ return () => {
         } catch (error) {
             setError("Message failed to send!");
             console.log("Send Message Error:", error);
+        }finally {
+            // loading was stuck true forever if sendMessage threw an error, moved setLoading(false) to finally to ensure it always clears
+            setLoading(false);
         }
     };
+    // update my username
+const updateUsername = async ({ name }) => {
+    try {
+        setError(""); // Clear any previous errors
+        setSuccess(""); // Clear any previous success messages
+        
+        if (!name) {
+            setError("Name cannot be empty");
+            return;
+        }
+        
+        const contract = await connectingWithContract();
+        setLoading(true);
+        const tx = await contract.updateUsername(name);
+        await tx.wait();
+        
+        setLoading(false);
+        setSuccess("Name updated successfully!");
+        await fetchData(); // refresh userName in context
+    } catch (error) {
+        setLoading(false);
+        console.log("updateUsername error:", error);
+        
+        if (error.message.includes("User not registered")) {
+            setError("User not registered. Please create an account first.");
+        } else if (error.message.includes("revert")) {
+            setError("Failed to update name. Please try again.");
+        } else {
+            setError("Failed to update name. Please try again.");
+        }
+    }
+};
     //read info of user
     const readUser= async({userAddress}) =>{
         try{
@@ -259,7 +291,7 @@ return () => {
     };
     return(
         <ChatAppContext.Provider value ={{readMessage ,createAccount ,addFriends,sendMessage,readUser,connectWallet,ChechIfWalletConnected,account ,
-        userName,friendLists,friendMsg,loading,userLists,error,success, currentUserName,currentUserAddress ,notifications,setNotifications,}}>  
+        userName,friendLists,friendMsg,loading,userLists,error,success, currentUserName,currentUserAddress ,notifications,setNotifications,updateUsername,}}>  
             {children}
 
         </ChatAppContext.Provider>

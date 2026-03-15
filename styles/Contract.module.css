@@ -1,0 +1,251 @@
+/* Contract.module.css */
+.page {
+  min-height: 100vh;
+  background: transparent;
+  color: #fff;
+  font-family: 'SN Pro', 'Tiro Bangla', sans-serif;
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* header */
+.header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  animation: fadeDown 0.5s ease both;
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tag {
+  font-size: 0.7rem;
+  color: #00FFA3;
+  letter-spacing: 0.2em;
+  opacity: 0.7;
+}
+
+.title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  margin: 0.25rem 0 0.35rem;
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(0,255,163,0.25), 0 0 70px rgba(188,19,254,0.12);
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: #555;
+  letter-spacing: 0.2em;
+  margin: 0;
+}
+
+/* grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  animation: fadeUp 0.6s ease 0.1s both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+
+.fullWidth { grid-column: 1 / -1; }
+
+/* card */
+.card {
+  background: #1A1A1A;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: border-color 0.25s;
+}
+.card:hover { border-color: rgba(0,255,163,0.3); }
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.cardIcon {
+  color: #00FFA3;
+  font-size: 1rem;
+}
+
+.cardTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  flex: 1;
+}
+
+.badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: rgba(0,255,163,0.1);
+  border: 1px solid rgba(0,255,163,0.3);
+  color: #00FFA3;
+}
+
+.badgeGreen {
+  background: rgba(0,255,163,0.1);
+  border-color: rgba(0,255,163,0.3);
+  color: #00FFA3;
+}
+
+.badgeRed {
+  background: rgba(255,68,68,0.1);
+  border-color: rgba(255,68,68,0.3);
+  color: #ff4444;
+}
+
+/* fields */
+.field {
+  margin-bottom: 1.1rem;
+}
+.field:last-child { margin-bottom: 0; }
+
+.label {
+  display: block;
+  font-size: 0.6rem;
+  color: #555;
+  letter-spacing: 0.18em;
+  margin-bottom: 0.4rem;
+}
+
+.value {
+  font-size: 0.88rem;
+  color: #aaa;
+  margin: 0;
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+/* address box */
+.addressBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+}
+
+.code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #00FFA3;
+  word-break: break-all;
+  flex: 1;
+  line-height: 1.5;
+}
+
+.copyBtn {
+  font-family: 'SN Pro', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #666;
+  padding: 4px 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.copyBtn:hover {
+  border-color: rgba(0,255,163,0.4);
+  color: #00FFA3;
+}
+.copied {
+  border-color: #00FFA3 !important;
+  color: #00FFA3 !important;
+}
+
+.networkPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00FFA3;
+  box-shadow: 0 0 6px #00FFA3;
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; }
+  50%      { opacity:0.4; box-shadow: 0 0 12px #00FFA3; }
+}
+
+.notConnected {
+  font-size: 0.85rem;
+  color: #ff4444;
+  margin: 0;
+}
+
+/* ABI grid */
+.abiGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.6rem;
+}
+
+.abiItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
+  transition: border-color 0.2s;
+}
+.abiItem:hover { border-color: rgba(0,255,163,0.25); }
+
+.fnKeyword {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #BC13FE;
+  background: rgba(188,19,254,0.1);
+  border-radius: 3px;
+  padding: 1px 5px;
+  flex-shrink: 0;
+}
+
+.fnName {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  color: #ccc;
+}

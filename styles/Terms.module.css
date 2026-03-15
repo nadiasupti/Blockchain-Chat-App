@@ -1,0 +1,205 @@
+/* Terms.module.css */
+.page {
+  min-height: 100vh;
+  background: transparent;
+  color: #fff;
+  font-family: 'SN Pro', 'Tiro Bangla', sans-serif;
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: fadeDown 0.5s ease both;
+}
+@keyframes fadeDown {
+  from { opacity:0; transform:translateY(-16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.tag      { font-size:0.7rem; color:#00FFA3; letter-spacing:0.2em; opacity:0.7; }
+.title    { font-size:clamp(1.8rem,4vw,3rem); font-weight:800; margin:0.25rem 0 0.35rem; letter-spacing:0.08em; color:#fff; text-shadow:0 0 30px rgba(0,255,163,0.25),0 0 70px rgba(188,19,254,0.12); }
+.subtitle { font-size:0.75rem; color:#555; letter-spacing:0.2em; margin:0; }
+
+/* timeline sections */
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.section {
+  display: flex;
+  gap: 1.2rem;
+  animation: fadeUp 0.5s ease both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* left column: number + line */
+.sectionLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 44px;
+}
+
+.number {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #BC13FE;
+  letter-spacing: 0.1em;
+  background: rgba(188,19,254,0.1);
+  border: 1px solid rgba(188,19,254,0.3);
+  border-radius: 20px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.connector {
+  width: 1px;
+  flex: 1;
+  min-height: 20px;
+  background: linear-gradient(to bottom, rgba(188,19,254,0.3), rgba(188,19,254,0.05));
+  margin: 6px 0;
+}
+
+.section:last-child .connector { display:none; }
+
+/* right column: content */
+.sectionRight {
+  flex: 1;
+  background: #1A1A1A;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 0.8rem;
+  transition: border-color 0.25s;
+}
+.sectionRight:hover { border-color: rgba(0,255,163,0.25); }
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.icon         { color:#00FFA3; font-size:0.9rem; }
+.sectionTitle { font-size:0.95rem; font-weight:700; color:#fff; margin:0; }
+
+.content {
+  font-size: 0.86rem;
+  color: #888;
+  line-height: 1.7;
+  margin: 0 0 0.9rem;
+}
+
+.highlightBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: rgba(0,255,163,0.05);
+  border: 1px solid rgba(0,255,163,0.15);
+  border-left: 3px solid #00FFA3;
+  border-radius: 0 6px 6px 0;
+  padding: 0.55rem 0.8rem;
+}
+
+.highlightDot { color:#00FFA3; font-size:0.7rem; flex-shrink:0; margin-top:2px; }
+
+.highlight {
+  font-size: 0.8rem;
+  color: #00FFA3;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* agree bar */
+.agreeBar {
+  margin-top: 2rem;
+  padding: 1.2rem 1.5rem;
+  background: #1A1A1A;
+  border: 1px solid #333;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: border-color 0.3s;
+  animation: fadeUp 0.6s ease 0.4s both;
+}
+
+.agreeBarDone {
+  border-color: rgba(0,255,163,0.4);
+  background: rgba(0,255,163,0.04);
+}
+
+.agreeLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+}
+
+.checkbox { display:none; }
+
+.checkmark {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #444;
+  border-radius: 4px;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.checkbox:checked + .checkmark {
+  background: #00FFA3;
+  border-color: #00FFA3;
+}
+
+.checkbox:checked + .checkmark::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: 2px solid #111;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.agreeText {
+  font-size: 0.85rem;
+  color: #aaa;
+  font-weight: 500;
+}
+
+.agreedBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #00FFA3;
+  background: rgba(0,255,163,0.1);
+  border: 1px solid rgba(0,255,163,0.3);
+  border-radius: 20px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  animation: pop 0.2s ease;
+}
+@keyframes pop {
+  from { opacity:0; transform:scale(0.8); }
+  to   { opacity:1; transform:scale(1); }
+}
